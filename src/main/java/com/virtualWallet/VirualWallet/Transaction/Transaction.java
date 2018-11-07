@@ -1,14 +1,17 @@
 package com.virtualWallet.VirualWallet.Transaction;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.test.annotation.Timed;
 
 import com.virtualWallet.VirualWallet.Account.Account;
@@ -16,10 +19,9 @@ import com.virtualWallet.VirualWallet.Account.Account;
 @Entity
 @Table(name="transaction")
 public class Transaction {
-	private static final String GenerationTime = null;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transactionId;
 	
 	private long fromAccountId;
@@ -28,8 +30,12 @@ public class Transaction {
 	
 	private double amount;
 	
+	@CreationTimestamp
+	private LocalDateTime timestamp;
+	
 	@ManyToOne
-	private Account account;
+	private Account account;	
+	
 	
 	public Transaction() {
 		
@@ -81,6 +87,14 @@ public class Transaction {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(LocalDateTime createDateTime) {
+		this.timestamp = createDateTime;
 	}
 
 

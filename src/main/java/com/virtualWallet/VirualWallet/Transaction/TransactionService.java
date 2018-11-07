@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.virtualWallet.VirualWallet.Account.Account;
 import com.virtualWallet.VirualWallet.Account.AccountRepository;
-import com.virtualWallet.VirualWallet.Users.CustomErrorType;
+import com.virtualWallet.VirualWallet.ErrorHandling.CustomErrorType;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ public class TransactionService {
 	private AccountRepository accRepository;
 
 	@Async
-	public CompletableFuture<ResponseEntity<?>> withdrawMoney(Account account, double amount) {
+	public CompletableFuture<ResponseEntity<?>> withdrawMoney(Account account, double amount) throws InterruptedException {
 		if (account.getAccountBalance() < amount || account.getAccountBalance() <= 0) {
 			ResponseEntity<CustomErrorType> rs = new ResponseEntity<CustomErrorType>(
 					new CustomErrorType("LOW BALANCE. CANNOT PROCESS THE TRANSACTION", "UNPROCESSABLE_ENTITY"),
@@ -36,8 +36,9 @@ public class TransactionService {
 			account.setAccountBalance(account.getAccountBalance() - amount);
 			accRepository.save(account);
 			Transaction trans = new Transaction();
-			trans.setAccount(new Account(account.getAccountId()));
+			trans.setAccount(new Account(account.getAccountId(),account.getAccountBalance()));
 			trans.setAmount(amount);
+			trans.setTimestamp(trans.getTimestamp());
 			transactionRepository.save(trans);
 			ResponseEntity<Transaction> rs = new ResponseEntity<Transaction>(trans, HttpStatus.OK);
 			return CompletableFuture.completedFuture(rs);
@@ -47,11 +48,13 @@ public class TransactionService {
 
 	@Async
 	public CompletableFuture<ResponseEntity<?>> depositMoney(Account acc, double amount) throws InterruptedException {
+		
 		acc.setAccountBalance(acc.getAccountBalance() + amount);
 		accRepository.save(acc);
 		Transaction trans = new Transaction();
-		trans.setAccount(new Account(acc.getAccountId()));
+		trans.setAccount(new Account(acc.getAccountId(),acc.getAccountBalance()));
 		trans.setAmount(amount);
+		trans.setTimestamp(trans.getTimestamp());
 		transactionRepository.save(trans);
 		ResponseEntity<Transaction> rs = new ResponseEntity<Transaction>(trans, HttpStatus.OK);
 		return CompletableFuture.completedFuture(rs);
@@ -70,15 +73,17 @@ public class TransactionService {
 				ac1.setAccountBalance(ac1.getAccountBalance() - amount);
 				ac2.setAccountBalance(ac2.getAccountBalance() + amount);
 				Transaction trans1 = new Transaction();
-				trans1.setAccount(new Account(ac1.getAccountId()));
+				trans1.setAccount(new Account(ac1.getAccountId(),ac1.getAccountBalance()));
 				trans1.setAmount(amount);
 				trans1.setFromAccountId(ac1.getAccountId());
 				trans1.setToAccountId(ac2.getAccountId());
+				trans1.setTimestamp(trans1.getTimestamp());
 				Transaction trans2 = new Transaction();
-				trans2.setAccount(new Account(ac2.getAccountId()));
+				trans2.setAccount(new Account(ac2.getAccountId(),ac2.getAccountBalance()));
 				trans2.setAmount(amount);
 				trans2.setFromAccountId(ac1.getAccountId());
 				trans2.setToAccountId(ac2.getAccountId());
+				trans2.setTimestamp(trans2.getTimestamp());
 				accRepository.save(ac1);
 				accRepository.save(ac2);
 				transactionRepository.save(trans1);

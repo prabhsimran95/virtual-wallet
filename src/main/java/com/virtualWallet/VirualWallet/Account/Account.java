@@ -29,9 +29,16 @@ public class Account {
 	public Account() {		
 	}
 
-	public Account(long accountId) {
+	public Account(long accountId, double accountBalance, String walletId) {
 		super();
 		this.accountId = accountId;		
+		this.accountBalance= accountBalance;
+		this.user= new User("","walletId","","","");
+	}
+	public Account(long accountId, double accountBalance) {
+		super();
+		this.accountId = accountId;		
+		this.accountBalance= accountBalance;
 	}
 
 	public User getUser() {

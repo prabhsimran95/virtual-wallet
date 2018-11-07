@@ -1,4 +1,4 @@
-package com.virtualWallet.VirualWallet.Users;
+package com.virtualWallet.VirualWallet.ErrorHandling;
 
 /**
  * @author Prabhsimran

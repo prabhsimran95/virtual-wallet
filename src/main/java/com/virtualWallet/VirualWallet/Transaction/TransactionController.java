@@ -22,9 +22,10 @@ public class TransactionController {
 	private AccountRepository accRepository;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/withdrawal/{accountId}/{amount}")
-	public ResponseEntity<?> withdrawalTransaction(@PathVariable String accountId, @PathVariable String amount) throws InterruptedException, ExecutionException {
+	public ResponseEntity<?> withdrawalTransaction(@PathVariable String accountId, @PathVariable String amount)
+			throws InterruptedException, ExecutionException {
 		Account acc = accRepository.findByaccountId(Long.parseLong(accountId)).get();
-		CompletableFuture<ResponseEntity<?>> rs=transactionService.withdrawMoney(acc, Double.parseDouble(amount));
+		CompletableFuture<ResponseEntity<?>> rs = transactionService.withdrawMoney(acc, Double.parseDouble(amount));
 		return rs.get();
 	}
 
