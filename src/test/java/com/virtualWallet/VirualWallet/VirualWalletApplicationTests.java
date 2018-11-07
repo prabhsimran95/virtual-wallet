@@ -2,10 +2,8 @@ package com.virtualWallet.VirualWallet;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
+import org.h2.jdbc.JdbcSQLException;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.virtualWallet.VirualWallet.Account.Account;
 import com.virtualWallet.VirualWallet.Account.AccountService;
 import com.virtualWallet.VirualWallet.Transaction.Transaction;
-import com.virtualWallet.VirualWallet.Transaction.TransactionController;
 import com.virtualWallet.VirualWallet.Transaction.TransactionService;
 import com.virtualWallet.VirualWallet.Users.User;
 import com.virtualWallet.VirualWallet.Users.UserService;
@@ -57,7 +54,7 @@ public class VirualWalletApplicationTests {
 	}
 
 	@Test
-	public void testCreateAccount() {
+	public void testCreateAccount() throws JdbcSQLException {
 		this.account = new Account(1001L, 500.00);
 		ResponseEntity<?> rs = accountService.createAccount(account);
 		assertEquals(200, rs.getStatusCodeValue());

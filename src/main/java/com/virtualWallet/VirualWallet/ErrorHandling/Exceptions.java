@@ -2,6 +2,7 @@ package com.virtualWallet.VirualWallet.ErrorHandling;
 
 import java.util.NoSuchElementException;
 
+import org.h2.jdbc.JdbcSQLException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,5 +33,7 @@ public class Exceptions{
 				new CustomErrorType("Wallet/Account Not Found", "NOT_FOUND"),
 				HttpStatus.NOT_FOUND);
 	}
+	
+	
 
 }

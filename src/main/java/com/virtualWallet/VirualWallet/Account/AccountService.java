@@ -8,6 +8,8 @@ package com.virtualWallet.VirualWallet.Account;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.h2.jdbc.JdbcSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +28,17 @@ public class AccountService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public ResponseEntity<?> createAccount(Account account) {
-		accountRepository.save(account);
-		return new ResponseEntity<Account>(account, HttpStatus.OK);
+	public ResponseEntity<?> createAccount(Account account) throws JdbcSQLException{
+		try {
+			accountRepository.save(account);
+			return new ResponseEntity<Account>(account, HttpStatus.OK);
+			
+		}
+		catch(Exception e) {
+			return new ResponseEntity<CustomErrorType>(
+					new CustomErrorType("INAPPROPRIATE WALLETID. WALLET DOES NOT EXIST", "CONFLICT"),
+					HttpStatus.CONFLICT);
+		}
 		
 	}
 
