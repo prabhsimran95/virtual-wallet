@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.virtualWallet.VirualWallet.Account.Account;
 import com.virtualWallet.VirualWallet.Account.AccountRepository;
 import com.virtualWallet.VirualWallet.ErrorHandling.CustomErrorType;
+import com.virtualWallet.VirualWallet.ErrorHandling.Exceptions;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ public class TransactionService {
 			trans.setAccount(new Account(account.getAccountId(),account.getAccountBalance()));
 			trans.setAmount(amount);
 			trans.setTimestamp(trans.getTimestamp());
+			trans.setType("Withdrawal");
 			transactionRepository.save(trans);
 			ResponseEntity<Transaction> rs = new ResponseEntity<Transaction>(trans, HttpStatus.OK);
 			return CompletableFuture.completedFuture(rs);
@@ -55,6 +57,7 @@ public class TransactionService {
 		trans.setAccount(new Account(acc.getAccountId(),acc.getAccountBalance()));
 		trans.setAmount(amount);
 		trans.setTimestamp(trans.getTimestamp());
+		trans.setType("Deposit");
 		transactionRepository.save(trans);
 		ResponseEntity<Transaction> rs = new ResponseEntity<Transaction>(trans, HttpStatus.OK);
 		return CompletableFuture.completedFuture(rs);
@@ -78,12 +81,14 @@ public class TransactionService {
 				trans1.setFromAccountId(ac1.getAccountId());
 				trans1.setToAccountId(ac2.getAccountId());
 				trans1.setTimestamp(trans1.getTimestamp());
+				trans1.setType("Withdrawal");
 				Transaction trans2 = new Transaction();
 				trans2.setAccount(new Account(ac2.getAccountId(),ac2.getAccountBalance()));
 				trans2.setAmount(amount);
 				trans2.setFromAccountId(ac1.getAccountId());
 				trans2.setToAccountId(ac2.getAccountId());
 				trans2.setTimestamp(trans2.getTimestamp());
+				trans2.setType("Deposit");
 				accRepository.save(ac1);
 				accRepository.save(ac2);
 				transactionRepository.save(trans1);
@@ -94,6 +99,7 @@ public class TransactionService {
 				return CompletableFuture.completedFuture(rs);
 			}
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 

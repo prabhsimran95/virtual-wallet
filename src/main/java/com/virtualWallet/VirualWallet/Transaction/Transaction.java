@@ -24,9 +24,11 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transactionId;
 	
-	private long fromAccountId;
+	private long fromAccountId;	
 	
 	private long toAccountId;
+	
+	private String type;
 	
 	private double amount;
 	
@@ -41,13 +43,13 @@ public class Transaction {
 		
 	}
 	
-	public Transaction(long transactionId, long fromAccountId, long toAccountId, double amount, Account account) {
+	public Transaction(long transactionId, long fromAccountId, long toAccountId, double amount, long accountId) {
 		super();
 		this.transactionId = transactionId;
 		this.fromAccountId = fromAccountId;
 		this.toAccountId = toAccountId;
 		this.amount = amount;
-		this.account = account;
+		this.account = new Account(0,0.0);
 	}
 
 	
@@ -96,6 +98,15 @@ public class Transaction {
 	public void setTimestamp(LocalDateTime createDateTime) {
 		this.timestamp = createDateTime;
 	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 
 
 	

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @ControllerAdvice
 @RestController
-public class Exceptions {
+public class Exceptions{
 	
 	@ExceptionHandler(NumberFormatException.class)
 	public ResponseEntity<?> handleNumberFormatException(NumberFormatException e) {
