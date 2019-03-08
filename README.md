@@ -1,5 +1,5 @@
 # virtual-wallet
-1.	I have used Spring Boot framework to build this library application.
+1. I have used Spring Boot framework to build this library application.
 2.	I have used h2 database as the in memory store.
 3.	I have used Spring JPA, Hibernate to perform database operations.
 4.	For simplicity, I have created a data.sql file which automatically populate the data in tables when the application loads.
@@ -22,9 +22,9 @@ http://localhost:8080/users/{WalletId}/accounts/{accountId}
 3.	Perform a withdrawal transaction on an account.
 http://localhost:8080/withdrawal/{accountId}/{amount}
 4.	Perform a deposit transaction on an account
-       http://localhost:8080/deposit/{accountId}/{amount}
+http://localhost:8080/deposit/{accountId}/{amount}
 5.	Perform a transfer from one account to another.
-       http://localhost:8080/transfer/{fromAccountId}/{toAccountId}/{amount}
+http://localhost:8080/transfer/{fromAccountId}/{toAccountId}/{amount}
 6.	Return last N transactions for an account.
 http://localhost:8080/transaction/{accountId}/
 
