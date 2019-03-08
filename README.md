@@ -1,5 +1,5 @@
 # virtual-wallet
-1. I have used Spring Boot framework to build this library application.
+1.  I have used Spring Boot framework to build this library application.
 2.	I have used h2 database as the in memory store.
 3.	I have used Spring JPA, Hibernate to perform database operations.
 4.	For simplicity, I have created a data.sql file which automatically populate the data in tables when the application loads.
