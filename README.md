@@ -1,9 +1,9 @@
 # virtual-wallet
-1.  I have used Spring Boot framework to build this library application.
-2.	I have used h2 database as the in memory store.
-3.	I have used Spring JPA, Hibernate to perform database operations.
+1. Used Spring Boot framework to build this library application.
+2.	Used h2 database as the in memory store.
+3.	Used Spring JPA, Hibernate to perform database operations.
 4.	For simplicity, I have created a data.sql file which automatically populate the data in tables when the application loads.
-5.	I have used a one-one relationship of user and wallet and each user is distinguished uniquely by his/her email ID so that means if a user want to create a wallet with same data then it will generate an error message which will be returned in JSON format.
+5.	Devised a one-one relationship of user and wallet and each user is distinguished uniquely by his/her email ID so that means if a user want to create a wallet with same data then it will generate an error message which will be returned in JSON format.
 6.	Each wallet is associated with multiple accounts and have a many to one relationship which is shown in Account.java class.
 7.	For creating a Wallet, walletId is automatically generated and is the primary key of User entity so we need to post only the rest of the body with 
 8.	To check the current account balance, a user must have account in his wallet, so I have created an end point of creating new Account, and furthermore he can also see all his accounts based on the walletId and the API for these are mentioned below.
@@ -14,7 +14,7 @@
 13.	For exceptions, I have used @ExceptionHandler annotation which automatically handles some basic exceptions such as no value found or wrong input format.
 14.	For Error Handling, I have made a customErrorType class which is used in ResponseEntity to generate response.
  
-The URI Resource for 6 basic end points are as follows
+# End points 
 1.	Create a new Wallet for a user.
 http://localhost:8080/user/create
 2.	Return current account balance
@@ -27,15 +27,13 @@ http://localhost:8080/deposit/{accountId}/{amount}
 http://localhost:8080/transfer/{fromAccountId}/{toAccountId}/{amount}
 6.	Return last N transactions for an account.
 http://localhost:8080/transaction/{accountId}/
-
-
-Other end points
-1.	Create Accounts for a specific wallet.
+7.	Create Accounts for a specific wallet.
 http://localhost:8080/users/{WalletId}/accounts
-2.	Get all accounts for a specific wallet
+8.	Get all accounts for a specific wallet
 http://localhost:8080/users/{WalletId}/accounts
 
 
+# SQL Data
 
 For simplicity I have populated the tables on startup and the dataset is given below and can also be found at data.sql in resources folder.
 
